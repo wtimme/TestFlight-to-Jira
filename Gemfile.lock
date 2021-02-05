@@ -2,6 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     CFPropertyList (3.0.3)
+    activesupport (6.1.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     artifactory (3.0.15)
@@ -28,6 +34,7 @@ GEM
     colored2 (3.1.2)
     commander-fastlane (4.4.6)
       highline (~> 1.7.2)
+    concurrent-ruby (1.1.8)
     declarative (0.0.20)
     declarative-option (0.1.0)
     digest-crc (0.6.3)
@@ -133,16 +140,24 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
+    i18n (1.8.8)
+      concurrent-ruby (~> 1.0)
+    jira-ruby (1.6.0)
+      activesupport
+      multipart-post
+      oauth (~> 0.5, >= 0.5.0)
     jmespath (1.4.0)
     json (2.5.1)
     jwt (2.2.2)
     memoist (0.16.2)
     mini_magick (4.11.0)
     mini_mime (1.0.2)
+    minitest (5.14.3)
     multi_json (1.15.0)
     multipart-post (2.0.0)
     nanaimo (0.3.0)
     naturally (2.2.1)
+    oauth (0.5.5)
     os (1.1.1)
     plist (3.6.0)
     public_suffix (4.0.6)
@@ -173,6 +188,8 @@ GEM
     tty-screen (0.8.1)
     tty-spinner (0.9.3)
       tty-cursor (~> 0.7)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
     uber (0.1.0)
     unf (0.1.4)
       unf_ext
@@ -190,12 +207,14 @@ GEM
       rouge (~> 2.0.7)
     xcpretty-travis-formatter (1.0.1)
       xcpretty (~> 0.2, >= 0.0.7)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   fastlane (= 2.173.0)
+  jira-ruby (= 1.6.0)
 
 BUNDLED WITH
    1.17.2
