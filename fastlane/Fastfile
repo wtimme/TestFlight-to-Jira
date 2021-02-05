@@ -35,11 +35,12 @@ lane :connect_feedback do
     feedback.screenshots.each do |screenshot|
 
       # screenshot.image_assets is an array of different resolults of a screenshots
-      image_asset = screenshot.image_assets.first
+      screenshot.image_assets.each do |image_asset|
 
-      puts "\turl: #{image_asset["url"]}"
-      puts "\twidth: #{image_asset["width"]}"
-      puts "\theight: #{image_asset["height"]}"
+        puts "\turl: #{image_asset["url"]}"
+        puts "\twidth: #{image_asset["width"]}"
+        puts "\theight: #{image_asset["height"]}"
+      end
     end
   end
 end
