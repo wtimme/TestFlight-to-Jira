@@ -1,0 +1,38 @@
+lane :connect_feedback do
+  fastlane_require 'spaceship'
+
+  Spaceship::Tunes.login
+  Spaceship::Tunes.select_team
+
+  # Gets app
+  app = Spaceship::ConnectAPI::App.find(ENV["BUNDLE_IDENTIFIER"])
+
+  # Gets feedback for an app (default includes screenshots and tester info)
+  feedbacks = app.get_beta_feedback
+
+  # Iterate over feedbacks
+  feedbacks.each do |feedback|
+    puts ""
+    puts "ID: #{feedback.id}"
+    puts "comment: #{feedback.comment}"
+    if feedback.tester
+      puts "name: #{feedback.tester.first_name} #{feedback.tester.last_name}"
+      puts "email: #{feedback.tester.email}"
+    end
+
+    if feedback.build
+      puts "build: #{feedback.build.version}"
+    end
+
+    # Iterate over feedback screenshots
+    feedback.screenshots.each do |screenshot|
+
+      # screenshot.image_assets is an array of different resolults of a screenshots
+      image_asset = screenshot.image_assets.first
+
+      puts "\turl: #{image_asset["url"]}"
+      puts "\twidth: #{image_asset["width"]}"
+      puts "\theight: #{image_asset["height"]}"
+    end
+  end
+end
