@@ -1,2 +1,6 @@
 # Ruby gems
 vendor/
+
+# Fastlane
+fastlane/report.xml
+fastlane/.env
