@@ -2,7 +2,7 @@ lane :connect_feedback do
   fastlane_require 'spaceship'
 
   Spaceship::Tunes.login
-  Spaceship::Tunes.select_team
+  team_id = Spaceship::Tunes.select_team
 
   # Gets app
   app = Spaceship::ConnectAPI::App.find(ENV["BUNDLE_IDENTIFIER"])
