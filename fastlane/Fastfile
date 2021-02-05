@@ -24,6 +24,13 @@ lane :connect_feedback do
       puts "build: #{feedback.build.version}"
     end
 
+    download_link = feedback_download_link(
+      app_id: app.id,
+      team_id: team_id,
+      feedback_id: feedback.id
+    )
+    puts "Download: #{download_link}"
+
     # Iterate over feedback screenshots
     feedback.screenshots.each do |screenshot|
 
@@ -35,4 +42,8 @@ lane :connect_feedback do
       puts "\theight: #{image_asset["height"]}"
     end
   end
+end
+
+private_lane :feedback_download_link do |options|
+  "https://appstoreconnect.apple.com/testflight/v3/providers/#{options[:team_id]}/apps/#{options[:app_id]}/feedback/download/#{options[:feedback_id]}.zip"
 end
