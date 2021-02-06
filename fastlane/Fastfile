@@ -48,3 +48,31 @@ end
 private_lane :feedback_download_link do |options|
   "https://appstoreconnect.apple.com/testflight/v3/providers/#{options[:team_id]}/apps/#{options[:app_id]}/feedback/download/#{options[:feedback_id]}.zip"
 end
+
+private_lane :get_existing_feedback_ids_from_jira do |_|
+  require 'jira-ruby'
+
+  options = {
+    :username           => ENV['JIRA_USERNAME'],
+    :password           => ENV['JIRA_PASSWORD'],
+    :site               => 'http://localhost:2990',
+    :context_path       => '/jira',
+    :auth_type          => :cookie,  # Set cookie based authentication
+    :use_cookies        => true,     # Send cookies with each request
+    :use_ssl            => false,
+  }
+
+  client = JIRA::Client.new(options)
+
+  project = client.Project.find(ENV["JIRA_PROJECT_KEY"])
+
+  feedback_id_field = ENV['JIRA_FEEDBACK_ID_FIELD']
+  jql = "cf[#{feedback_id_field}] IS NOT EMPTY"
+
+  feedback_ids = Set.new
+  client.Issue.jql(jql).each do |issue|
+    feedback_ids.add(issue.fields["customfield_#{feedback_id_field}"])
+  end
+
+  feedback_ids
+end
