@@ -15,6 +15,7 @@ client = JIRA::Client.new(options)
 lane :connect_feedback do
   fastlane_require 'spaceship'
 
+  existing_feedback_ids = get_existing_feedback_ids_from_jira
   Spaceship::Tunes.login
   team_id = Spaceship::Tunes.select_team
 
@@ -29,6 +30,10 @@ lane :connect_feedback do
     puts ""
     puts "ID: #{feedback.id}"
     puts "comment: #{feedback.comment}"
+    if existing_feedback_ids.include?(feedback.id)
+      puts "Feedback with ID #{feedback.id} is already tracked. Skipping..."
+      next
+    end
     if feedback.tester
       puts "name: #{feedback.tester.first_name} #{feedback.tester.last_name}"
       puts "email: #{feedback.tester.email}"
