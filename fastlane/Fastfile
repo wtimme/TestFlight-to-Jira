@@ -27,45 +27,71 @@ lane :connect_feedback do
 
   # Iterate over feedbacks
   feedbacks.each do |feedback|
-    puts ""
-    puts "ID: #{feedback.id}"
-    puts "comment: #{feedback.comment}"
     if existing_feedback_ids.include?(feedback.id)
       puts "Feedback with ID #{feedback.id} is already tracked. Skipping..."
       next
     end
+
+    download_url = "https://appstoreconnect.apple.com/testflight/v3/providers/#{team_id}/apps/#{app.id}/feedback/download/#{feedback.id}.zip"
+
+    details_table_data = Array.new
+
     if feedback.tester
-      puts "name: #{feedback.tester.first_name} #{feedback.tester.last_name}"
-      puts "email: #{feedback.tester.email}"
+      details_table_data.push("||Name|#{feedback.tester.first_name} #{feedback.tester.last_name}|")
+      details_table_data.push("||Email|#{feedback.tester.email}|")
     end
 
     if feedback.build
-      puts "build: #{feedback.build.version}"
+      details_table_data.push("||Build version|#{feedback.build.version}|")
     end
 
-    download_link = feedback_download_link(
-      app_id: app.id,
-      team_id: team_id,
-      feedback_id: feedback.id
-    )
-    puts "Download: #{download_link}"
+    details_table_data.push("||Timestamp|#{feedback.timestamp}|")
+    details_table_data.push("||Device model|#{feedback.device_model}|")
+    details_table_data.push("||OS Version|#{feedback.os_version}|")
+    details_table_data.push("||Connection status|#{feedback.connection_status}|")
 
-    # Iterate over feedback screenshots
+    screenshots = Array.new
     feedback.screenshots.each do |screenshot|
-
-      # screenshot.image_assets is an array of different resolults of a screenshots
+      assets = Array.new
       screenshot.image_assets.each do |image_asset|
-
-        puts "\turl: #{image_asset["url"]}"
-        puts "\twidth: #{image_asset["width"]}"
-        puts "\theight: #{image_asset["height"]}"
+        screenshots.push("- [#{image_asset["width"]}x#{image_asset["height"]}|#{image_asset["url"]}]")
       end
-    end
-  end
-end
 
-private_lane :feedback_download_link do |options|
-  "https://appstoreconnect.apple.com/testflight/v3/providers/#{options[:team_id]}/apps/#{options[:app_id]}/feedback/download/#{options[:feedback_id]}.zip"
+      screenshots.push("#{assets.join("\n")}")
+    end
+
+    screenshot_section = ''
+    if !screenshots.empty?
+      screenshot_section = """
+      h2. Screenshots
+
+      #{screenshots.join("\n")}
+      """
+    end
+
+    issue = client.Issue.build
+    issue.save({
+      "fields" => {
+        "summary"   => feedback.comment,
+        "project"   => {"key" => ENV["JIRA_PROJECT_KEY"]},
+        "issuetype" => {"id" => ENV["JIRA_ISSUE_TYPE_ID"]},
+        "customfield_#{ENV['JIRA_FEEDBACK_ID_FIELD']}" => feedback.id,
+        "description" => """
+        {quote}
+        #{feedback.comment}
+        {quote}
+
+        h1. Details from TestFlight
+
+        #{details_table_data.join("\n")}
+
+        [Download feedback|#{download_url}]
+
+        #{screenshot_section}
+        """
+      }
+    })
+  end
 end
 
 private_lane :get_existing_feedback_ids_from_jira do |_|
