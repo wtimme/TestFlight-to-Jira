@@ -1,3 +1,17 @@
+require 'jira-ruby'
+
+options = {
+  :username           => ENV['JIRA_USERNAME'],
+  :password           => ENV['JIRA_PASSWORD'],
+  :site               => 'http://localhost:2990',
+  :context_path       => '/jira',
+  :auth_type          => :cookie,  # Set cookie based authentication
+  :use_cookies        => true,     # Send cookies with each request
+  :use_ssl            => false,
+}
+
+client = JIRA::Client.new(options)
+
 lane :connect_feedback do
   fastlane_require 'spaceship'
 
@@ -50,20 +64,6 @@ private_lane :feedback_download_link do |options|
 end
 
 private_lane :get_existing_feedback_ids_from_jira do |_|
-  require 'jira-ruby'
-
-  options = {
-    :username           => ENV['JIRA_USERNAME'],
-    :password           => ENV['JIRA_PASSWORD'],
-    :site               => 'http://localhost:2990',
-    :context_path       => '/jira',
-    :auth_type          => :cookie,  # Set cookie based authentication
-    :use_cookies        => true,     # Send cookies with each request
-    :use_ssl            => false,
-  }
-
-  client = JIRA::Client.new(options)
-
   project = client.Project.find(ENV["JIRA_PROJECT_KEY"])
 
   feedback_id_field = ENV['JIRA_FEEDBACK_ID_FIELD']
