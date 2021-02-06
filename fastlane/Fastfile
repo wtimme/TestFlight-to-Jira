@@ -85,7 +85,7 @@ lane :connect_feedback do
 
         #{details_table_data.join("\n")}
 
-        [Download feedback|#{download_url}]
+        [Download feedback|#{download_url}] {color:#c1c7d0}_(Requires App Store Connect authentication)_{color}
 
         #{screenshot_section}
         """
