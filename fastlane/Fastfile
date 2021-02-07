@@ -29,7 +29,7 @@ lane :connect_feedback do
   # Iterate over feedbacks
   feedbacks.each do |feedback|
     if existing_feedback_ids.include?(feedback.id)
-      puts "Feedback with ID #{feedback.id} is already tracked. Skipping..."
+      UI.message "Feedback with ID #{feedback.id} is already tracked. Skipping..."
       next
     end
 
