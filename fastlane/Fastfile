@@ -73,6 +73,8 @@ lane :connect_feedback do
       details_table_data.push("||Network|#{feedback.network_type}|")
     end
 
+    details_table_data.push("||Screen Resolution|#{feedback.screen_width}pts by #{feedback.screen_height}pts|")
+
     screenshots = Array.new
     feedback.screenshots.each do |screenshot|
       assets = Array.new
