@@ -26,6 +26,11 @@ lane :connect_feedback do
   # Gets feedback for an app (default includes screenshots and tester info)
   feedbacks = app.get_beta_feedback
 
+  # Reverse the array so that the most recent feedback is added last, resulting
+  # in a more reasonable order in Jira in terms of Jira issue IDs.
+  # (The higher the Jira issue ID, the more recent the feedback.)
+  feedbacks = feedbacks.reverse
+
   # Iterate over feedbacks
   feedbacks.each do |feedback|
     if existing_feedback_ids.include?(feedback.id)
