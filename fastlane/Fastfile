@@ -1,4 +1,5 @@
 require 'jira-ruby'
+require 'ios/devices'
 
 options = {
   :username           => ENV['JIRA_USERNAME'],
@@ -49,7 +50,16 @@ lane :connect_feedback do
     time = Time.parse feedback.timestamp
     details_table_data.push("||Timestamp|#{time.localtime.rfc822}|")
 
-    details_table_data.push("||Device model|#{feedback.device_model}|")
+    # Try to get more information on the device
+    deviceModelIdentifier = feedback.device_model.gsub('_', ',')
+    deviceModel = Ios::Devices.search(deviceModelIdentifier)
+    deviceModelDescription = deviceModel.name
+    if deviceModel.extra
+      deviceModelDescription = "#{deviceModel.name} (#{deviceModel.extra})"
+    end
+    details_table_data.push("||Device|#{deviceModelDescription}|")
+    details_table_data.push("||Device model|#{deviceModelIdentifier}|")
+
     details_table_data.push("||OS Version|#{feedback.os_version}|")
     details_table_data.push("||Battery|#{feedback.battery_percentage}%|")
     details_table_data.push("||Connection status|#{feedback.connection_status}|")
