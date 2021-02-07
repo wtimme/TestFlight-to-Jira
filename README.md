@@ -9,6 +9,10 @@ configure the project (see below).
 
 Then, simply run `bundle exec fastlane connect_feedback`.
 
+## Screenshot
+
+![Screenshot of a Jira issue that was created from TestFlight feedback](screenshot.png?raw=true)
+
 ## Configuration
 
 The project is configured through an `.env` file in the `fastlane` directory.
