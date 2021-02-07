@@ -2,6 +2,13 @@
 
 Create Jira tickets for app feedback that was submitted through TestFlight.
 
+## Running the script
+
+First, install the dependencies using Bundler: `bundle install`. Next,
+configure the project (see below).
+
+Then, simply run `bundle exec fastlane connect_feedback`.
+
 ## Configuration
 
 The project is configured through an `.env` file in the `fastlane` directory.
