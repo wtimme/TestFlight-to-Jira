@@ -60,6 +60,7 @@ lane :connect_feedback do
     details_table_data.push("||Device|#{deviceModelDescription}|")
     details_table_data.push("||Device model|#{deviceModelIdentifier}|")
 
+    details_table_data.push("||Architecture|#{feedback.architecture}|")
     details_table_data.push("||OS Version|#{feedback.os_version}|")
     details_table_data.push("||Battery|#{feedback.battery_percentage}%|")
     details_table_data.push("||Connection status|#{feedback.connection_status}|")
