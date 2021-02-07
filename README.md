@@ -62,4 +62,8 @@ JIRA_ISSUE_TYPE_ID="10002"
 
 In order to test during development, set up the Jira SDK as pointed out in the [jira-ruby documentation][1].
 
+# License
+
+This repository is licensed under the [MIT license](./LICENSE).
+
 [1]: https://github.com/sumoheavy/jira-ruby#setting-up-the-jira-sdk
