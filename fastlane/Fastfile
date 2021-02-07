@@ -97,16 +97,21 @@ lane :connect_feedback do
       """
     end
 
+    comment = feedback.comment
+    if !comment || comment.empty?
+      comment = '(No comment)'
+    end
+
     issue = client.Issue.build
     issue.save({
       "fields" => {
-        "summary"   => feedback.comment,
+        "summary"   => comment,
         "project"   => {"key" => ENV["JIRA_PROJECT_KEY"]},
         "issuetype" => {"id" => ENV["JIRA_ISSUE_TYPE_ID"]},
         "customfield_#{ENV['JIRA_FEEDBACK_ID_FIELD']}" => feedback.id,
         "description" => """
         {quote}
-        #{feedback.comment}
+        #{comment}
         {quote}
 
         h1. Details from TestFlight
