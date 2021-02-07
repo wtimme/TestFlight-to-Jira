@@ -3,11 +3,11 @@ require 'jira-ruby'
 options = {
   :username           => ENV['JIRA_USERNAME'],
   :password           => ENV['JIRA_PASSWORD'],
-  :site               => 'http://localhost:2990',
-  :context_path       => '/jira',
+  :site               => ENV['JIRA_SITE'],
+  :context_path       => ENV['JIRA_CONTEXT_PATH'],
   :auth_type          => :cookie,  # Set cookie based authentication
   :use_cookies        => true,     # Send cookies with each request
-  :use_ssl            => false,
+  :use_ssl            => ENV['JIRA_SITE'].start_with?('https'),
 }
 
 client = JIRA::Client.new(options)
