@@ -79,6 +79,7 @@ lane :connect_feedback do
     end
 
     details_table_data.push("||Screen Resolution|#{feedback.screen_width}pts by #{feedback.screen_height}pts|")
+    details_table_data.push("||Locale|#{feedback.locale}|")
 
     screenshots = Array.new
     feedback.screenshots.each do |screenshot|
