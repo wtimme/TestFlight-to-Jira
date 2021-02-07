@@ -77,9 +77,11 @@ lane :connect_feedback do
 
     screenshots = Array.new
     feedback.screenshots.each do |screenshot|
+      # Sort the assets by size - from smallest to largest.
+      sorted_assets = screenshot.image_assets.sort_by { |asset| [asset['width'], asset['height']] }
+
       assets = Array.new
-      screenshot.image_assets.each do |image_asset|
-        screenshots.push("- [#{image_asset["width"]}x#{image_asset["height"]}|#{image_asset["url"]}]")
+      sorted_assets.each do |image_asset|
       end
 
       screenshots.push("#{assets.join("\n")}")
