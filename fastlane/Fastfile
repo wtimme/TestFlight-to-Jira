@@ -45,7 +45,10 @@ lane :connect_feedback do
       details_table_data.push("||Build version|#{feedback.build.version}|")
     end
 
-    details_table_data.push("||Timestamp|#{feedback.timestamp}|")
+    # Use localized date
+    time = Time.parse feedback.timestamp
+    details_table_data.push("||Timestamp|#{time.localtime.rfc822}|")
+
     details_table_data.push("||Device model|#{feedback.device_model}|")
     details_table_data.push("||OS Version|#{feedback.os_version}|")
     details_table_data.push("||Connection status|#{feedback.connection_status}|")
