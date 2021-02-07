@@ -54,6 +54,10 @@ lane :connect_feedback do
     details_table_data.push("||Battery|#{feedback.battery_percentage}%|")
     details_table_data.push("||Connection status|#{feedback.connection_status}|")
 
+    if feedback.carrier
+      details_table_data.push("||Carrier|#{feedback.carrier}|")
+    end
+
     screenshots = Array.new
     feedback.screenshots.each do |screenshot|
       assets = Array.new
