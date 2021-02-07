@@ -58,6 +58,10 @@ lane :connect_feedback do
       details_table_data.push("||Carrier|#{feedback.carrier}|")
     end
 
+    if feedback.network_type
+      details_table_data.push("||Network|#{feedback.network_type}|")
+    end
+
     screenshots = Array.new
     feedback.screenshots.each do |screenshot|
       assets = Array.new
