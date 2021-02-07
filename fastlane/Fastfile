@@ -82,9 +82,10 @@ lane :connect_feedback do
 
       assets = Array.new
       sorted_assets.each do |image_asset|
+        assets.push("[#{image_asset["width"]}x#{image_asset["height"]}|#{image_asset["url"]}]")
       end
 
-      screenshots.push("#{assets.join("\n")}")
+      screenshots.push("- #{assets.join(", ")}")
     end
 
     screenshot_section = ''
