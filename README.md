@@ -15,6 +15,23 @@ Then, simply run `bundle exec fastlane connect_feedback`.
 
 ## Configuration
 
+### Jira
+
+#### Custom field
+
+In order to be able to tell which feedback has already been added to Jira, the script relies on a custom fields in Jira. For the type of this field, I suggest to use "Text Field (read only)". That way, only scripts are able to set the field. (The field does not need to be _visible_ in the screens of your issue. It just has to exist so that the feedback can be referenced.)
+
+Use this custom field as `JIRA_FEEDBACK_ID_FIELD`.
+
+#### Dedicated issue type
+
+Furthermore, I recommend that you add a new issue type (e.g. "TestFlight Feedback") in order to be able to distinguish issues that were created through this script from your regular ones.
+Alternatively, you can also just use any other issue type, e.g. "Bug", "Story" or "Task".
+
+Use the ID of the issue type as `JIRA_ISSUE_TYPE_ID`.
+
+## This script
+
 The project is configured through an `.env` file in the `fastlane` directory.
 
 ```bash
