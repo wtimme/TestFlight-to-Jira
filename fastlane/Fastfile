@@ -138,7 +138,11 @@ lane :connect_feedback do
       }
     })
 
-    UI.success "Added Jira issue for feedback with ID #{feedback.id}"
+    if issue.errorMessages
+      UI.error "Failed to create issue: #{issue.errorMessages.join(' ')}"
+    else
+      UI.success "Added Jira issue for feedback with ID #{feedback.id}"
+    end
   end
 end
 
