@@ -56,6 +56,14 @@ JIRA_FEEDBACK_ID_FIELD="10000"
 
 # ID of the issue type in Jira that will be used when creating the feedback.
 JIRA_ISSUE_TYPE_ID="10002"
+
+# Your App Store Connect / Apple Developer Portal user
+FASTLANE_USER="appleid@example.com"
+
+# Pregenerated session for App Store Connect
+# You can obtain this session using `bundle exec fastlane spaceauth -u user@email.com`.
+# See: https://docs.fastlane.tools/best-practices/continuous-integration/
+FASTLANE_SESSION="---\n- !ruby/object:HTTP::Cookie\n  name: DES5e2f6b4ca4..."
 ```
 
 ## Development
