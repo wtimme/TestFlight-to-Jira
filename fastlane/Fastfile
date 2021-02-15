@@ -6,8 +6,7 @@ options = {
   :password           => ENV['JIRA_PASSWORD'],
   :site               => ENV['JIRA_SITE'],
   :context_path       => ENV['JIRA_CONTEXT_PATH'],
-  :auth_type          => :cookie,  # Set cookie based authentication
-  :use_cookies        => true,     # Send cookies with each request
+  :auth_type          => :basic,
   :use_ssl            => ENV['JIRA_SITE'].start_with?('https'),
 }
 
