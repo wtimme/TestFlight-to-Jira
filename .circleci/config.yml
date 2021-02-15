@@ -1,0 +1,40 @@
+version: 2.1
+
+commands:
+  setup-environment:
+    steps:
+      - checkout
+      - run:
+          name: Set Ruby Version
+          command: echo 'chruby ruby-2.6' >> ~/.bash_profile
+      - restore_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install gems
+          command: bundle check || bundle install --path vendor/bundle --clean
+      - save_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+jobs:
+  run-fastlane:
+    macos:
+      xcode: "12.3.0"
+    steps:
+      - setup-environment
+      - run:
+          name: Execute Fastlane
+          command: bundle exec fastlane connect_feedback
+
+workflows:
+  import-feedback-from-testflight:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1-5"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - run-fastlane
