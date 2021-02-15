@@ -121,6 +121,7 @@ lane :connect_feedback do
         "project"   => {"key" => ENV["JIRA_PROJECT_KEY"]},
         "issuetype" => {"id" => ENV["JIRA_ISSUE_TYPE_ID"]},
         "customfield_#{ENV['JIRA_FEEDBACK_ID_FIELD']}" => feedback.id,
+        "assignee" => {"accountId" => ENV["JIRA_DEFAULT_ASSIGNEE_ACCOUNT_ID"]},
         "description" => """
         {quote}
         #{comment}

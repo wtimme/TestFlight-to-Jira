@@ -57,6 +57,9 @@ JIRA_FEEDBACK_ID_FIELD="10000"
 # ID of the issue type in Jira that will be used when creating the feedback.
 JIRA_ISSUE_TYPE_ID="10002"
 
+# Account ID of the default assignee for the Jira issues.
+JIRA_DEFAULT_ASSIGNEE_ACCOUNT_ID="2b4e0as4540sdf54087a89"
+
 # Your App Store Connect / Apple Developer Portal user
 FASTLANE_USER="appleid@example.com"
 
